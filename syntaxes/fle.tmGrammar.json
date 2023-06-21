@@ -1,0 +1,62 @@
+{
+    "scopeName": "source.fle",
+    "patterns": [{ "include": "#expression" }],
+   
+    "repository": {
+        "expression": {
+            "patterns": [
+                {
+                    "include": "#wavelength"
+                },
+                {
+                    "include": "#header"
+                },
+                {
+                    "include": "#time"
+                },
+                {
+                    "include": "#date"
+                },
+                {
+                    "include": "#remark"
+                },
+                {
+                    "include": "#remark-single"
+                },
+                {
+                    "include": "#mode"
+                }
+            ]
+        },
+        "wavelength": {
+            "match": "(?i)[0-9]+(m|cm|mm)",
+            "name": "entity.name.function"
+        },
+        "header": {
+            "match": "(?i)mycall|mygrid|operator|qslmsg|mywwff|mysota|nickname",
+            "name": "keyword.header"
+        },
+        "date": {
+            "match": "(?i)\\bdate .+",
+            "name": "markup.bold"
+        },
+        "time": {
+            "match": "(?:\\s*)(([0-2][0-9][0-5][0-9])|([0-9][0-5][0-9]\\D)|([0-5][0-9]\\D)|([0-9]\\D))",
+            "name": "markup.italic"
+        },
+        "remark-single": {
+            "match": "(?i)#.+",
+            "name": "string.double"
+        },
+        "remark": {
+            "begin": "\\<",
+            "end": "\\>",
+            "name": "comment.block"
+        },
+        "mode": {
+            "match": "(?i)\\b(CW|SSB|AM|FM|RTTY|FT8|PSK|JT65|JT9|FT4|JS8|ARDOP|ATV|C4FM|CHIP|CLO|CONTESTI|DIGITALVOICE|DOMINO|DSTAR|FAX|FSK441|HELL|ISCAT|JT4|JT6M|JT44|MFSK|MSK144|MT63|OLIVIA|OPERA|PAC|PAX|PKT|PSK2K|Q15|QRA64|ROS|RTTYM|SSTV|T10|THOR|THRB|TOR|V4|VOI|WINMOR|WSPR)\\b",
+            "name": "markup.bold"
+        }
+
+    }
+}
