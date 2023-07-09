@@ -1,7 +1,6 @@
 {
     "scopeName": "source.fle",
     "patterns": [{ "include": "#expression" }],
-   
     "repository": {
         "expression": {
             "patterns": [
@@ -29,7 +28,7 @@
             ]
         },
         "wavelength": {
-            "match": "(?i)[0-9]+(m|cm|mm)",
+            "match": "\\b(?i)[0-9]+(m|cm|mm)\\b",
             "name": "entity.name.function"
         },
         "header": {
@@ -41,7 +40,7 @@
             "name": "markup.bold"
         },
         "time": {
-            "match": "(?:\\s*)(([0-2][0-9][0-5][0-9])|([0-9][0-5][0-9]\\D)|([0-5][0-9]\\D)|([0-9]\\D))",
+            "match": "^(\\s+)?(([0-2][0-9][0-5][0-9])|([0-9][0-5][0-9])|([0-5][0-9])|([0-9]))[\\s]\\b",
             "name": "markup.italic"
         },
         "remark-single": {
