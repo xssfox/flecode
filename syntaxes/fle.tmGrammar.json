@@ -36,7 +36,7 @@
             "name": "keyword.header"
         },
         "date": {
-            "match": "(?i)\\bdate .+",
+            "match": "(?i)\\b((date\\s+\\+*)|(\\d\\d|\\d{4})[\\/\\-]\\d{1,2}[\\/\\-]\\d{1,2})",
             "name": "markup.bold"
         },
         "time": {

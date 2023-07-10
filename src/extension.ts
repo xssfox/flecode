@@ -22,6 +22,27 @@ import {
 } from "./TextEditorDecorationProvider";
 import { TextDecoder } from 'util';
 
+class MyFoldingRangeProvider implements vscode.FoldingRangeProvider {
+    provideFoldingRanges(document: vscode.TextDocument, context: vscode.FoldingContext, token: vscode.CancellationToken): vscode.FoldingRange[] {
+        let ranges: vscode.FoldingRange[] = [];
+        let last_date_line=null;
+		let dateMatch: RegExp = /\b((date\s+\+*)|(\d\d|\d{4})[\/\-]\d{1,2}[\/\-]\d{1,2})/i;
+		for (let i = 0; i < document.lineCount; i++) {
+            const line = document.lineAt(i).text.trim();
+            if (dateMatch.test(line)) {
+				if (last_date_line){
+                	ranges.push(new vscode.FoldingRange(last_date_line, i-1, vscode.FoldingRangeKind.Region));
+				}
+				last_date_line = i
+            }
+        }
+		if (last_date_line){
+			ranges.push(new vscode.FoldingRange(last_date_line, document.lineCount-1, vscode.FoldingRangeKind.Region));
+		}
+        return ranges;
+    }
+}
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -31,7 +52,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "flecode" is now active!');
 	vscode.workspace.registerTextDocumentContentProvider('flecode.pretty', new PrettyFLEProvider(editorRedrawWatcher));
-
+	vscode.languages.registerFoldingRangeProvider({ scheme: 'file', language: 'fle' }, new MyFoldingRangeProvider());
 	const showPretty = async (options?: TextDocumentShowOptions) => {
 		const actualUri = window.activeTextEditor?.document.uri;
 
