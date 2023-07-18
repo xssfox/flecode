@@ -25,18 +25,20 @@ import { TextDecoder } from 'util';
 class MyFoldingRangeProvider implements vscode.FoldingRangeProvider {
     provideFoldingRanges(document: vscode.TextDocument, context: vscode.FoldingContext, token: vscode.CancellationToken): vscode.FoldingRange[] {
         let ranges: vscode.FoldingRange[] = [];
-        let last_date_line=null;
+        let last_date_line = 0;
+		let line_matched = false;
 		let dateMatch: RegExp = /\b((date\s+\+*)|(\d\d|\d{4})[\/\-]\d{1,2}[\/\-]\d{1,2})/i;
 		for (let i = 0; i < document.lineCount; i++) {
             const line = document.lineAt(i).text.trim();
             if (dateMatch.test(line)) {
-				if (last_date_line){
+				if (line_matched){
                 	ranges.push(new vscode.FoldingRange(last_date_line, i-1, vscode.FoldingRangeKind.Region));
 				}
-				last_date_line = i
+				last_date_line = i;
+				line_matched = true;
             }
         }
-		if (last_date_line){
+		if (line_matched){
 			ranges.push(new vscode.FoldingRange(last_date_line, document.lineCount-1, vscode.FoldingRangeKind.Region));
 		}
         return ranges;

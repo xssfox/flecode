@@ -1,9 +1,47 @@
 {
     "scopeName": "source.fle",
-    "patterns": [{ "include": "#expression" }],
+    "patterns": [
+        {
+            "include": "#expression"
+        }
+    ],
     "repository": {
         "expression": {
             "patterns": [
+                {
+                    "include" : "#comment"
+                },
+                {
+                    "include": "#remark"
+                },
+                {
+                    "include": "#remark-single"
+                },
+                {
+                    "contentName": "#right_of_call",
+                    "begin": "(?i)\\b([\\d]{0,1}[A-Z]{1,2}\\d([A-Z]{1,4}|\\d{3,3}|\\d{1,3}[A-Z])[A-Z]{0,5}(\\/\\w+)?)\\b",
+                    "end": "$",
+                    "name": "expression.group",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "string.interpolated"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {}
+                    },
+                    "patterns": [
+                        {
+                            "include": "#remark"
+                        },
+                        {
+                            "include": "#remark-single"
+                        },
+                        {
+                            "include" : "#comment"
+                        }
+                    ]
+                },
                 {
                     "include": "#wavelength"
                 },
@@ -17,13 +55,10 @@
                     "include": "#date"
                 },
                 {
-                    "include": "#remark"
-                },
-                {
-                    "include": "#remark-single"
-                },
-                {
                     "include": "#mode"
+                },
+                {
+                    "include": "#call"
                 }
             ]
         },
@@ -32,20 +67,28 @@
             "name": "entity.name.function"
         },
         "header": {
-            "match": "(?i)mycall|mygrid|operator|qslmsg|mywwff|mysota|nickname",
+            "match": "(?i)mycall|mygrid|operator|qslmsg|mywwff|mysota|mypota|nickname",
             "name": "keyword.header"
         },
         "date": {
-            "match": "(?i)\\b((date\\s+\\+*)|(\\d\\d|\\d{4})[\\/\\-]\\d{1,2}[\\/\\-]\\d{1,2})",
+            "match": "(?i)\\b(((date|day)\\s+\\+*)|(\\d\\d|\\d{4})[\\/\\-]\\d{1,2}[\\/\\-]\\d{1,2})",
             "name": "markup.bold"
         },
         "time": {
-            "match": "^(\\s+)?(([0-2][0-9][0-5][0-9])|([0-9][0-5][0-9])|([0-5][0-9])|([0-9]))[\\s]\\b",
+            "match": "(^|\\s+)(\\s+)?(([0-2][0-9][0-5][0-9])|([0-9][0-5][0-9])|([0-5][0-9])|([0-9]))[\\s$]",
             "name": "markup.italic"
+        },
+        "call": {
+            "match": "(?i)\\b([\\d]{0,1}[A-Z]{1,2}\\d([A-Z]{1,4}|\\d{3,3}|\\d{1,3}[A-Z])[A-Z]{0,5}(\\/\\w+)?)\\b",
+            "name": "string.interpolated"
         },
         "remark-single": {
             "match": "(?i)#.+",
             "name": "string.double"
+        },
+        "comment": {
+            "match": "\\{.*\\}",
+            "name": "comment.block"
         },
         "remark": {
             "begin": "\\<",
@@ -55,7 +98,10 @@
         "mode": {
             "match": "(?i)\\b(CW|SSB|AM|FM|RTTY|FT8|PSK|JT65|JT9|FT4|JS8|ARDOP|ATV|C4FM|CHIP|CLO|CONTESTI|DIGITALVOICE|DOMINO|DSTAR|FAX|FSK441|HELL|ISCAT|JT4|JT6M|JT44|MFSK|MSK144|MT63|OLIVIA|OPERA|PAC|PAX|PKT|PSK2K|Q15|QRA64|ROS|RTTYM|SSTV|T10|THOR|THRB|TOR|V4|VOI|WINMOR|WSPR)\\b",
             "name": "markup.bold"
+        },
+        "right_of_call": {
+            "match": ".*",
+            "name": "comment.block"
         }
-
     }
 }
