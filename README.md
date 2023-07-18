@@ -14,7 +14,7 @@ For example:
 
 This extension contributes the following settings:
 
-* `flecode.flecliPath`: Path toe flecli binary
+* `flecode.flecliPath`: Path to flecli binary
 
 ## Known Issues
 
